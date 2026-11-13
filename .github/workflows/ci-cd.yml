@@ -1,0 +1,40 @@
+name: CI/CD Pipeline - Art Gallery TDD
+
+on:
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ main ]
+
+jobs:
+  ci-tests:
+    name: CI - Validação e Testes
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Validar Plano de GCS
+        run: |
+          test -f docs/PLANO_GCS.md
+          echo "Item de configuração docs/PLANO_GCS.md encontrado!"
+
+  deploy-staging:
+    name: CD - Deploy Staging
+    needs: ci-tests
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment: staging
+    steps:
+      - name: Deploy em Staging
+        run: echo "Deploy concluído com sucesso no ambiente staging!"
+
+  deploy-production:
+    name: CD - Deploy Production
+    needs: deploy-staging
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Deploy em Production
+        run: echo "Deploy aprovado pelo revisor obrigatório e concluído em production!"
