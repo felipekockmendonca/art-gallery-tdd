@@ -89,3 +89,6 @@ it('Green - Deve criar o usuário com sucesso quando os dados são válidos e n�
 
 - **O que faz:** Fornece dados válidos e configura o mock para não encontrar nenhum usuário existente `(mockResolvedValueOnce(null))`.
 - **O que valida:** Confirma que, quando todas as regras são atendidas, o sistema retorna a mensagem: *"Usuário criado com sucesso".*
+
+## Evidência de Proteção da Branch `main`
+![Evidência de recusa de push direto na main](docs/evidencia-push-main.png)
